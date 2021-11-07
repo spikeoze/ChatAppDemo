@@ -1,42 +1,64 @@
 const express = require('express');
 const path = require('path');
-
 const http = require('http');
 const socketio = require('socket.io');
 
 const PORT = 3000;
+const bot = "ChatBot"
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
 
+
+const formatMessages = require('./utilities/messages');
+const { userJoin, getCurrentUser, userLeave } = require('./utilities/user');
+
+
 app.use(express.static(path.join(__dirname, '/public')));
 
 
-io.on('connection', socket =>{
+io.on('connection', socket => {
     console.log('New Socket Connection');
 
+    //Joining a room
+    socket.on('joinRoom', ({ username, room }) => {
+        const user = userJoin(socket.id, username, room);
 
-    socket.emit('message', 'Welcome to ChatAppDemo')
+        socket.join(user.room);
 
-
-    socket.broadcast.emit('message', 'a user has connected');
-
-
-    socket.on('disconnect', ()=>{
-        io.emit('message', 'a user has disconnected');
-    })
+        socket.emit('message', formatMessages(bot, `Welcome to ${room}`));
 
 
-    socket.on('chatMessage', message =>{
-        io.emit('message', message);
+        socket.broadcast.to(user.room).emit('message', formatMessages(bot, `${username} has connected`));
+
+
     });
+
+
+
+    socket.on('chatMessage', message => {
+        const user = getCurrentUser(socket.id);
+        io.to(user.room).emit('message', formatMessages(user.username, message));
+    });
+
+
+
+
+    socket.on('disconnect', () => {
+        const user = userLeave(socket.id);
+        
+        if(user){
+            io.to(user.room).emit('message', formatMessages(bot, `${user.username} has disconnected`));
+        }
+        
+    })
 })
 
 
 
-server.listen(PORT, ()=>{
+server.listen(PORT, () => {
     console.log(`Listning on port ${PORT}`);
 })
 
