@@ -5,33 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
     <title>ChatAppDemo</title>
 </head>
 
 <body>
     <div class="container">
 
-        <header>
-        <h1>ChatAppDemo</h1>
-        <h2>Chat User and room</h2>
-    </header>
+        <header class="flex">
+            <h1>Chat App Demo</h1>
 
-    <main>
-        <form action="chat.html">
-            <div class="form-control">
-                <input type="text" name="username" id="username" placeholder="Enter Username" required>
-            </div>
+        </header>
 
-            <div class="form-control">
-                <select name="room" id="room">
-                    <option value="room-1">Room-1</option>
-                    <option value="room-2">Room-2</option>
-                    <option value="room-3">Room-3</option>
-                </select>
+        <main>
+            <div class="card flex">
+
+                <h2>Chat User and room</h2>
+                <form action="chat.html">
+                    <div class="form-control">
+                        <input type="text" name="username" id="username" autocomplete="off" placeholder="Enter Username" required>
+                    </div>
+
+                    <div class="form-control">
+                        <select name="room" id="room">
+                            <option value="room-1">Room-1</option>
+                            <option value="room-2">Room-2</option>
+                            <option value="room-3">Room-3</option>
+                        </select>
+                    </div>
+                    <button class="btn">Join</button>
+                </form>
+
             </div>
-            <button>Submit</button>
-        </form>
-    </main>
+        </main>
 
     </div>
 

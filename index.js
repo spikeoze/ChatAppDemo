@@ -13,7 +13,7 @@ const io = socketio(server);
 
 
 const formatMessages = require('./utilities/messages');
-const { userJoin, getCurrentUser, userLeave } = require('./utilities/user');
+const { userJoin, getCurrentUser, userLeave, getUserRoom } = require('./utilities/user');
 
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -31,8 +31,11 @@ io.on('connection', socket => {
         socket.emit('message', formatMessages(bot, `Welcome to ${room}`));
 
 
+
         socket.broadcast.to(user.room).emit('message', formatMessages(bot, `${username} has connected`));
 
+        // rooms and users
+        io.to(user.room).emit('roomUsers', { room: user.room, users: getUserRoom(user.room) });
 
     });
 
@@ -51,6 +54,10 @@ io.on('connection', socket => {
         
         if(user){
             io.to(user.room).emit('message', formatMessages(bot, `${user.username} has disconnected`));
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                users: getUserRoom(user.room)
+            });
         }
         
     })

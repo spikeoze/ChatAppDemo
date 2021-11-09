@@ -24,10 +24,14 @@ function userLeave (id){
     }
 }
 
+function getUserRoom(room){
+    return users.filter(user => user.room === room);    
 
+}
 
 module.exports = {
     userJoin,
     getCurrentUser,
-    userLeave
+    userLeave,
+    getUserRoom
 }

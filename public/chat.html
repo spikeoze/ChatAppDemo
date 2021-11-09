@@ -5,29 +5,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chat.css">
     <title>ChatAppDemo</title>
 </head>
 
 <body>
-    <h1>ChatAppDemo</h1>
+    <div class="container flex">
 
-    <h2>Chat Box</h2>
+        <h1>Chat App Demo</h1>
 
-    <div class="chat-messages">
-        <h2>messages</h2>
-    </div>
-    <form id="chat-form">
-        <div class="form-control">
-            <input type="text" name="text" id="text">
+
+        <div class="chatBox">
+
+
+            <div class="user-and-room-show item1">
+                <div class="room">
+                    <h2>Room Name:</h2>
+                    <h3 id="room-name"></h3>
+                    <h2>USERS: </h2>
+
+                </div>
+
+                <div class="users user-flex scroll" id="userList">
+                    
+                </div>
+            </div>
+
+
+            <div class="chat-messages scroll item2">
+
+            </div>
+
+
+            <div class="message-bar item3">
+
+
+                <form id="chat-form">
+                    <div class="form-control">
+                        <input type="text" name="text" id="text" autocomplete="off" placeholder="Message">
+                    </div>
+
+                    <button class="btn"><img src="images/arrow.png"></button>
+
+                </form>
+
+
+            </div>
+
+
         </div>
-
-        <button>Send</button>
-
-    </form>
-
-
-
-
+    </div>
 
 
 
